@@ -1,3 +1,4 @@
+import 'package:crafty_bay/presentation/ui/screens/complete_profile_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
 import 'package:crafty_bay/presentation/ui/utils/strings/app_string.dart';
 import 'package:crafty_bay/presentation/ui/widgets/app_logo_widget.dart';
@@ -99,7 +100,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   }
 
   void _onTapNextButton() {
-    // Get.to(() => const OtpVerificationScreen());
+     Get.to(() => const CompleteProfileScreen());
   }
 
   @override
