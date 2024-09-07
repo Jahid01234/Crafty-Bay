@@ -1,5 +1,6 @@
 import 'package:crafty_bay/presentation/ui/utils/assets/app_assets.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
+import 'package:crafty_bay/presentation/ui/utils/strings/app_string.dart';
 import 'package:crafty_bay/presentation/ui/widgets/app_bar_icon_button.dart';
 import 'package:crafty_bay/presentation/ui/widgets/home_banner_slider.dart';
 import 'package:crafty_bay/presentation/ui/widgets/search_box_text_field.dart';
@@ -41,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
             children: [
               SectionHeader(
-                  title: "All Categories",
+                  title: AppString.categoriesText,
                   onTap: (){},
               ),
               const SizedBox(height: 8),

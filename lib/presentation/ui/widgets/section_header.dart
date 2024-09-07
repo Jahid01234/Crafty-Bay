@@ -1,3 +1,4 @@
+import 'package:crafty_bay/presentation/ui/utils/strings/app_string.dart';
 import 'package:flutter/material.dart';
 
 class SectionHeader extends StatelessWidget {
@@ -23,7 +24,7 @@ class SectionHeader extends StatelessWidget {
         ),
         TextButton(
           onPressed: onTap,
-            child: const Text("See All"),
+            child: const Text(AppString.seeAllText),
         ),
       ],
     );

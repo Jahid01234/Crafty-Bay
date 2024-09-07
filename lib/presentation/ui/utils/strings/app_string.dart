@@ -27,6 +27,10 @@ class AppString{
   static const String shippingHintText = 'Shipping Address';
   static const String completeText = 'Complete';
 
+  // Home Screen text
+  static const String searchHintText = "Search";
+  static const String seeAllText = "See All";
+  static const String categoriesText = "All Categories";
 
 
 }
