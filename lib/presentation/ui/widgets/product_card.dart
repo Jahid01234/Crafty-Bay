@@ -31,6 +31,7 @@ class ProductCard extends StatelessWidget {
                       image: AssetImage(
                         AssetsPath.dummyProductImg,
                       ),
+                    fit: BoxFit.scaleDown
                   ),
               ),
             ),

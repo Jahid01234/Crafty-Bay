@@ -15,6 +15,14 @@ class CraftyBayApp extends StatelessWidget {
       theme: ThemeData(
         colorSchemeSeed: AppColors.themeColor,
         scaffoldBackgroundColor: AppColors.white,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          titleTextStyle: TextStyle(
+            color: Colors.black54,
+            fontWeight: FontWeight.w400,
+            fontSize: 20
+          ),
+        ),
         progressIndicatorTheme: const ProgressIndicatorThemeData(
           color: AppColors.themeColor
         ),
