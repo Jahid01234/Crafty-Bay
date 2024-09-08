@@ -20,14 +20,17 @@ class SearchBoxTextField extends StatelessWidget {
         filled: true,
         hintText: AppString.searchHintText,
         prefixIcon: const Icon(Icons.search,color: Colors.black45,),
-        border:  const OutlineInputBorder(
+        border:   OutlineInputBorder(
             borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(10),
         ),
-        enabledBorder:const  OutlineInputBorder(
-            borderSide: BorderSide.none
+        enabledBorder:  OutlineInputBorder(
+            borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(10),
         ),
-        focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide.none
+        focusedBorder:  OutlineInputBorder(
+            borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
 

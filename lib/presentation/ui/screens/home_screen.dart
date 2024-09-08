@@ -1,10 +1,14 @@
 import 'package:crafty_bay/presentation/ui/utils/assets/app_assets.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
 import 'package:crafty_bay/presentation/ui/utils/strings/app_string.dart';
-import 'package:crafty_bay/presentation/ui/widgets/app_bar_icon_button.dart';
+import 'package:crafty_bay/presentation/ui/widgets/home/app_bar_icon_button.dart';
 import 'package:crafty_bay/presentation/ui/widgets/home_banner_slider.dart';
-import 'package:crafty_bay/presentation/ui/widgets/search_box_text_field.dart';
-import 'package:crafty_bay/presentation/ui/widgets/section_header.dart';
+import 'package:crafty_bay/presentation/ui/widgets/home/horizontal_category_list_view.dart';
+import 'package:crafty_bay/presentation/ui/widgets/home/horizontal_product_list_view.dart';
+import 'package:crafty_bay/presentation/ui/widgets/product_card.dart';
+import 'package:crafty_bay/presentation/ui/widgets/home/search_box_text_field.dart';
+import 'package:crafty_bay/presentation/ui/widgets/home/section_header.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -20,23 +24,83 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: _buildAppBar(),
-      body:Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 16),
-             SearchBoxTextField(
-               textEditingController: TextEditingController(),
-             ),
-            const SizedBox(height: 16),
-            const HomeBannerSlider(),
-            const SizedBox(height: 16),
-            _buildCategoriesSection(),
-          ],
+      body:SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 16),
+               SearchBoxTextField(
+                 textEditingController: TextEditingController(),
+               ),
+              const SizedBox(height: 16),
+              const HomeBannerSlider(),
+              const SizedBox(height: 16),
+              _buildCategoriesSection(),
+              const SizedBox(height: 4),
+              _buildPopularProductSection(),
+              const SizedBox(height: 16),
+              _buildSpecialProductSection(),
+              const SizedBox(height: 16),
+              _buildNewProductSection(),
+              const SizedBox(height: 40),
+
+              
+            ],
+          ),
         ),
       ) ,
     );
   }
+
+  Widget _buildPopularProductSection(){
+    return Column(
+      children: [
+        SectionHeader(
+          title: "Popular",
+          onTap: (){},
+        ),
+        const SizedBox(height: 4),
+        const SizedBox(
+          height: 180,
+          child: HorizontalProductListView(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSpecialProductSection(){
+    return Column(
+      children: [
+        SectionHeader(
+          title: "Special",
+          onTap: (){},
+        ),
+        const SizedBox(height: 4),
+        const SizedBox(
+          height: 180,
+          child: HorizontalProductListView(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNewProductSection(){
+    return Column(
+      children: [
+        SectionHeader(
+          title: "New",
+          onTap: (){},
+        ),
+        const SizedBox(height: 4),
+        const SizedBox(
+          height: 180,
+          child: HorizontalProductListView(),
+        ),
+      ],
+    );
+  }
+
 
   Widget _buildCategoriesSection() {
     return Column(
@@ -45,49 +109,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: AppString.categoriesText,
                   onTap: (){},
               ),
-              const SizedBox(height: 8),
-              SizedBox(
-                height: 140,
-                child: _buildCategoryListView(),
+              const SizedBox(height: 4),
+              const SizedBox(
+                height: 120,
+                child: HorizontalCategoryListView(),
               ),
             ],
           );
   }
 
-  Widget _buildCategoryListView() {
-    return ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 10,
-                  separatorBuilder: (_,__){
-                    return const SizedBox(width: 8);
-                  },
-                  itemBuilder: (context,index){
-                    return Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration:  BoxDecoration(
-                            color: AppColors.themeColor.withOpacity(0.18),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child:const  Icon(
-                            Icons.computer,
-                            size: 48,
-                            color: AppColors.themeColor,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        const Text(
-                          'Electronics',
-                          style: TextStyle(
-                            color: AppColors.themeColor,
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-              );
-  }
 
   AppBar _buildAppBar() {
     return AppBar(
@@ -113,6 +143,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
+
+
+
+
 
 
 
