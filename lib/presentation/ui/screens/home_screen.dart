@@ -1,4 +1,6 @@
+import 'package:crafty_bay/presentation/state_holders/bottom_nav_bar_controller.dart';
 import 'package:crafty_bay/presentation/ui/screens/category_list_screen.dart';
+import 'package:crafty_bay/presentation/ui/screens/main_bottom_nav_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/assets/app_assets.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
 import 'package:crafty_bay/presentation/ui/utils/strings/app_string.dart';
@@ -29,8 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             children: [
+
               const SizedBox(height: 16),
-               SearchBoxTextField(
+              SearchBoxTextField(
                  textEditingController: TextEditingController(),
                ),
               const SizedBox(height: 16),
@@ -44,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 16),
               _buildNewProductSection(),
               const SizedBox(height: 40),
-
               
             ],
           ),
@@ -108,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SectionHeader(
                   title: AppString.categoriesText,
                   onTap: (){
-                    Get.to(()=> const CategoryListScreen());
+                    Get.find<BottomNavBarController>().selectCategory();
                   },
               ),
               const SizedBox(height: 4),

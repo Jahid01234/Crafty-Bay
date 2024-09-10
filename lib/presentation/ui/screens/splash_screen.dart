@@ -1,5 +1,6 @@
 import 'package:crafty_bay/presentation/ui/screens/email_verification_screen.dart';
 import 'package:crafty_bay/presentation/ui/screens/home_screen.dart';
+import 'package:crafty_bay/presentation/ui/screens/main_bottom_nav_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
 import 'package:crafty_bay/presentation/ui/utils/strings/app_string.dart';
 import 'package:crafty_bay/presentation/ui/widgets/app_logo_widget.dart';
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(
       const Duration(seconds: 2),
       () {
-        Get.off(() => const HomeScreen());
+        Get.off(() => const MainBottomNavScreen());
       },
     );
   }
