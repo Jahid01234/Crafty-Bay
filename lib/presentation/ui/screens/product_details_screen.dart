@@ -1,4 +1,5 @@
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
+import 'package:crafty_bay/presentation/ui/widgets/color_picker.dart';
 import 'package:crafty_bay/presentation/ui/widgets/product_image_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -95,9 +96,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                      ),
                    ],
                  ),
+                 const SizedBox(height: 8),
+                 ColorPicker(
+                     colors: const [
+                       Colors.blue,
+                       Colors.greenAccent,
+                       Colors.teal,
+                       Colors.cyan
+                     ],
+                     onColorSelected: (color){},
+                 ),
                ],
              ),
            ),
+
 
         ],
       ),
