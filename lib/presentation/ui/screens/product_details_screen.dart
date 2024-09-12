@@ -1,7 +1,7 @@
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
 import 'package:crafty_bay/presentation/ui/widgets/color_picker.dart';
 import 'package:crafty_bay/presentation/ui/widgets/product_image_slider.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:crafty_bay/presentation/ui/widgets/size_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
 
@@ -31,7 +31,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                    crossAxisAlignment: CrossAxisAlignment.start,
                    children: [
                      Expanded(
-                       child: Text('Nike shoe 2024 latest model - New year special deal',
+                       child: Text(
+                         'Nike shoe 2024 latest model - New year special deal',
                          style: Theme.of(context).textTheme.titleMedium,
                        ),
                      ),
@@ -104,8 +105,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                        Colors.teal,
                        Colors.cyan
                      ],
-                     onColorSelected: (color){},
+                     onColorSelected: (Color color){},
                  ),
+                 const SizedBox(height: 15),
+                 SizePicker(
+                   sizes: const [
+                     'S',
+                     'M',
+                     'L',
+                     'XL',
+                     '2L'
+                   ],
+                   onSizeSelected: (String selectedSize ) {  },
+                 ),
+                 const SizedBox(height: 8),
                ],
              ),
            ),
