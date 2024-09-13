@@ -32,7 +32,9 @@ class _ProductImageSliderState extends State<ProductImageSlider> {
                     decoration: BoxDecoration(
                       color: Colors.grey.shade100,
                       image: const DecorationImage(
-                          image: AssetImage(AssetsPath.dummyProductImg),
+                          image: AssetImage(
+                              AssetsPath.dummyProductImg,
+                          ),
                       ),
                     ),
                   );
