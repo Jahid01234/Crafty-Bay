@@ -26,17 +26,20 @@ class _WishListScreenState extends State<WishListScreen> {
             icon: const Icon(Icons.arrow_back_ios),
           ),
         ),
-        body: GridView.builder(
-          itemCount: 20,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            childAspectRatio: 0.7,
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 8,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: GridView.builder(
+            itemCount: 20,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: 0.7,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+            ),
+            itemBuilder: (context,index){
+              return const ProductCard();
+            },
           ),
-          itemBuilder: (context,index){
-            return const ProductCard();
-          },
         ),
       ),
     );
