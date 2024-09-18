@@ -1,8 +1,8 @@
 import 'package:crafty_bay/controller_binder.dart';
-import 'package:crafty_bay/presentation/ui/screens/splash_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'presentation/ui/screens/reviews_screen.dart';
 
 class CraftyBayApp extends StatelessWidget {
   const CraftyBayApp({super.key});
@@ -12,7 +12,7 @@ class CraftyBayApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Crafty Bay Ecommerce App',
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
+      home: const ReviewsScreen(),
       initialBinding: ControllerBinder(),
       theme: ThemeData(
         colorSchemeSeed: AppColors.themeColor,

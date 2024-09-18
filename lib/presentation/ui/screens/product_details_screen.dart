@@ -1,8 +1,10 @@
+import 'package:crafty_bay/presentation/ui/screens/reviews_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
 import 'package:crafty_bay/presentation/ui/widgets/color_picker.dart';
 import 'package:crafty_bay/presentation/ui/widgets/product_image_slider.dart';
 import 'package:crafty_bay/presentation/ui/widgets/size_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -139,7 +141,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         ),
         const SizedBox(width: 8),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Get.to(()=> const ReviewsScreen());
+          },
           child: const Text(
             "Reviews",
             style: TextStyle(
@@ -190,7 +194,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge
-                    ?.copyWith(color: AppColors.themeColor),
+                    ?.copyWith(color: AppColors.themeColor,
+                ),
               ),
             ],
           ),
