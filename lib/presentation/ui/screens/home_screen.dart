@@ -1,7 +1,9 @@
 import 'package:crafty_bay/presentation/state_holders/bottom_nav_bar_controller.dart';
+import 'package:crafty_bay/presentation/state_holders/category_list_controller.dart';
 import 'package:crafty_bay/presentation/ui/utils/assets/app_assets.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
 import 'package:crafty_bay/presentation/ui/utils/strings/app_string.dart';
+import 'package:crafty_bay/presentation/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:crafty_bay/presentation/ui/widgets/home/app_bar_icon_button.dart';
 import 'package:crafty_bay/presentation/ui/widgets/home_banner_slider.dart';
 import 'package:crafty_bay/presentation/ui/widgets/home/horizontal_category_list_view.dart';
@@ -114,9 +116,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
               ),
               const SizedBox(height: 4),
-              const SizedBox(
+              SizedBox(
                 height: 120,
-                child: HorizontalCategoryListView(),
+                child: GetBuilder<CategoryListController>(
+                  builder: (categoryListController) {
+                    return Visibility(
+                      visible: !categoryListController.inProgress,
+                        replacement: const CenteredCircularProgressIndicator(),
+                        child: HorizontalCategoryListView(
+                          categoryList: categoryListController.categoryList,
+                        ),
+                    );
+                  }
+                ),
               ),
             ],
           );

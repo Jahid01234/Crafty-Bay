@@ -1,19 +1,23 @@
+import 'package:crafty_bay/data/models/category_model.dart';
 import 'package:crafty_bay/presentation/ui/screens/product_list_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CategoryCard extends StatelessWidget {
+  final CategoryModel categoryModel;
+
   const CategoryCard({
     super.key,
+    required this.categoryModel,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Get.to(()=>const ProductListScreen(
-            categoryName: 'Electronics',
+        Get.to(()=> ProductListScreen(
+            categoryName: categoryModel.categoryName ?? '',
          ),
         );
       },
@@ -32,9 +36,9 @@ class CategoryCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 4),
-          const Text(
-            'Electronics',
-            style: TextStyle(
+          Text(
+            categoryModel.categoryName ?? '',
+            style: const TextStyle(
               color: AppColors.themeColor,
             ),
           ),
