@@ -42,7 +42,7 @@ class NetworkCaller{
             }
         }catch (e) {
             // Use logger section to see the output console
-            _responseLog(url, -1, null, {}, true, e);
+            _responseLog(url, -1, null, {}, false, e);
 
             return NetworkResponse(
                 statusCode: -1,
@@ -90,7 +90,7 @@ class NetworkCaller{
             }
         }catch (e) {
             // Use logger section to see the output console
-            _responseLog(url, -1, null, {}, true, e);
+            _responseLog(url, -1, null, {}, false, e);
 
             return NetworkResponse(
                 statusCode: -1,

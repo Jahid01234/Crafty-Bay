@@ -1,6 +1,4 @@
 import 'package:crafty_bay/presentation/state_holders/bottom_nav_bar_controller.dart';
-import 'package:crafty_bay/presentation/ui/screens/category_list_screen.dart';
-import 'package:crafty_bay/presentation/ui/screens/main_bottom_nav_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/assets/app_assets.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
 import 'package:crafty_bay/presentation/ui/utils/strings/app_string.dart';
@@ -22,6 +20,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
