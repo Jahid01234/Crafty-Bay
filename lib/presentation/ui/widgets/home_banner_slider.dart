@@ -59,12 +59,16 @@ class _HomeBannerSliderState extends State<HomeBannerSlider> {
                       alignment: Alignment.center,
                       child: Row(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.network(slider.image ?? '',
-                              width: 100,
-                              fit: BoxFit.fill,
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Placeholder(
+                              fallbackWidth: 150,
+                              fallbackHeight: 100,
                             ),
+                            // child: Image.network(slider.image ?? '',
+                            //   width: 50,
+                            //   fit: BoxFit.fill,
+                            // ),
                           ),
                           const SizedBox(width: 10),
                           Expanded(

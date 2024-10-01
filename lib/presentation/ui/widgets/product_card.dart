@@ -1,3 +1,4 @@
+import 'package:crafty_bay/data/models/product_model.dart';
 import 'package:crafty_bay/presentation/ui/screens/product_details_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/assets/app_assets.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
@@ -5,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductCard extends StatelessWidget {
+  final ProductModel product;
   const ProductCard({
     super.key,
+    required this.product,
   });
 
   @override
@@ -20,24 +23,26 @@ class ProductCard extends StatelessWidget {
           color: Colors.white,
           elevation: 1,
           child: SizedBox(
-            width: 130,
+            width: 140,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   height: 100,
-                  width: 130,
+                  width: 140,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: AppColors.themeColor.withOpacity(0.1),
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10)),
+                        topRight: Radius.circular(10),
+                    ),
                     image: const DecorationImage(
                         image: AssetImage(
                           AssetsPath.dummyProductImg,
                         ),
-                        fit: BoxFit.scaleDown),
+                        fit: BoxFit.scaleDown,
+                    ),
                   ),
                 ),
                 Padding(
@@ -45,10 +50,10 @@ class ProductCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Product Name ",
+                      Text(
+                        product.title ?? '',
                         maxLines: 1,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black45,
                         ),
@@ -56,24 +61,24 @@ class ProductCard extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "\$120 ",
-                            style: TextStyle(
+                           Text(
+                            "\$${product.price} ",
+                            style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               color: AppColors.themeColor,
                             ),
                           ),
-                          const Wrap(
+                           Wrap(
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.star,
                                 color: Colors.amber,
                                 size: 20,
                               ),
                               Text(
-                                "3.4 ",
-                                style: TextStyle(
+                                "${product.star}",
+                                style: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black45,
                                 ),

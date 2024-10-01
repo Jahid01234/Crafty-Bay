@@ -57,7 +57,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ),
                 const SizedBox(height: 15),
                 SizePicker(
-                  sizes: const ['S', 'M', 'L', 'XL', '2L'],
+                  sizes: const ['S', 'M', 'L', 'XL'],
                   onSizeSelected: (String selectedSize) {},
                 ),
                 const SizedBox(height: 16),
