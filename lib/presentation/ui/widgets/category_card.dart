@@ -17,7 +17,7 @@ class CategoryCard extends StatelessWidget {
     return GestureDetector(
       onTap: (){
         Get.to(()=> ProductListScreen(
-            categoryName: categoryModel.categoryName ?? '',
+            category: categoryModel,
          ),
         );
       },
@@ -26,14 +26,21 @@ class CategoryCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration:  BoxDecoration(
-              color: AppColors.themeColor.withOpacity(0.18),
+              color: AppColors.themeColor.withOpacity(0.10),
               borderRadius: BorderRadius.circular(10),
             ),
-            child:const  Icon(
-              Icons.computer,
-              size: 48,
-              color: AppColors.themeColor,
+            child: Image(
+              image: NetworkImage(
+                  categoryModel.categoryImg.toString(),
+              ),
+              fit: BoxFit.cover,
+              height: 50,
             ),
+            // child:const  Icon(
+            //   Icons.computer,
+            //   size: 48,
+            //   color: AppColors.themeColor,
+            // ),
           ),
           const SizedBox(height: 4),
           Text(

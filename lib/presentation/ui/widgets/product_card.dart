@@ -1,12 +1,12 @@
 import 'package:crafty_bay/data/models/product_model.dart';
 import 'package:crafty_bay/presentation/ui/screens/product_details_screen.dart';
-import 'package:crafty_bay/presentation/ui/utils/assets/app_assets.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
+
   const ProductCard({
     super.key,
     required this.product,
@@ -32,14 +32,15 @@ class ProductCard extends StatelessWidget {
                   width: 140,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppColors.themeColor.withOpacity(0.1),
+                   // color: AppColors.themeColor.withOpacity(0.01),
+                    color: Colors.white24,
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10),
                     ),
-                    image: const DecorationImage(
-                        image: AssetImage(
-                          AssetsPath.dummyProductImg,
+                    image:  DecorationImage(
+                        image: NetworkImage(
+                          product.image.toString(),
                         ),
                         fit: BoxFit.scaleDown,
                     ),

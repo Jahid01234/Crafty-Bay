@@ -55,21 +55,29 @@ class _HomeBannerSliderState extends State<HomeBannerSlider> {
                       decoration:  BoxDecoration(
                         color: AppColors.themeColor,
                         borderRadius:BorderRadius.circular(20),
+                        image: DecorationImage(
+                            image: NetworkImage(slider.image.toString()),
+                            fit: BoxFit.cover
+                        ),
                       ),
                       alignment: Alignment.center,
                       child: Row(
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Placeholder(
-                              fallbackWidth: 150,
-                              fallbackHeight: 100,
-                            ),
-                            // child: Image.network(slider.image ?? '',
-                            //   width: 50,
-                            //   fit: BoxFit.fill,
-                            // ),
-                          ),
+                           // Container(
+                           //   height: 180,
+                           //   width: 150,
+                           //   decoration: BoxDecoration(
+                           //     borderRadius: BorderRadius.only(
+                           //       bottomLeft: Radius.circular(20),
+                           //         topLeft: Radius.circular(20)
+                           //     ),
+                           //     image: DecorationImage(
+                           //       image: NetworkImage(slider.image.toString()),
+                           //       fit: BoxFit.cover
+                           //     ),
+                           //
+                           //   ),
+                           // ),
                           const SizedBox(width: 10),
                           Expanded(
                               child: Column(
@@ -81,7 +89,7 @@ class _HomeBannerSliderState extends State<HomeBannerSlider> {
                                     textAlign: TextAlign.start,
                                     style:
                                     Theme.of(context).textTheme.titleLarge?.copyWith(
-                                      color: Colors.white,
+                                      color: Colors.grey,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
