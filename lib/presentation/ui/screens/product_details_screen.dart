@@ -1,5 +1,8 @@
+import 'package:crafty_bay/data/models/product_details_model.dart';
+import 'package:crafty_bay/presentation/state_holders/product_details_controller.dart';
 import 'package:crafty_bay/presentation/ui/screens/reviews_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
+import 'package:crafty_bay/presentation/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:crafty_bay/presentation/ui/widgets/color_picker.dart';
 import 'package:crafty_bay/presentation/ui/widgets/product_image_slider.dart';
 import 'package:crafty_bay/presentation/ui/widgets/size_picker.dart';
@@ -7,44 +10,77 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
 
+
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key});
+  final int productId;
+
+  const ProductDetailsScreen({
+    super.key,
+    required this.productId,
+  });
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Get.find<ProductDetailsController>().getProductDetails(widget.productId);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Product Details"),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: _buildProductDetails(),
-          ),
-          _buildPriceAndAddToCartSection(),
-        ],
+      body: GetBuilder<ProductDetailsController>(
+        builder: (productDetailsController) {
+          if (productDetailsController.inProgress) {
+            return const CenteredCircularProgressIndicator();
+          }
+
+          if (productDetailsController.errorMessage != null) {
+            return Center(
+              child: Text(productDetailsController.errorMessage!),
+            );
+          }
+
+          return Column(
+            children: [
+              Expanded(
+                child: _buildProductDetails(productDetailsController.product!),
+              ),
+              _buildPriceAndAddToCartSection(productDetailsController.product!),
+            ],
+          );
+        }
       ),
     );
   }
 
-  Widget _buildProductDetails() {
+  Widget _buildProductDetails(ProductDetailsModel product) {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const ProductImageSlider(),
+          ProductImageSlider(
+            sliderUrls: [
+              product.img1!,
+              product.img2!,
+              product.img3!,
+              product.img4!,
+            ],
+          ),
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildNameAndQuantitySection(),
+                _buildNameAndQuantitySection(product),
                 const SizedBox(height: 4),
-                _buildRatingAndReviewSection(),
+                _buildRatingAndReviewSection(product),
                 const SizedBox(height: 8),
                 ColorPicker(
                   colors: const [
@@ -55,13 +91,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ],
                   onColorSelected: (Color color) {},
                 ),
+
                 const SizedBox(height: 15),
                 SizePicker(
-                  sizes: const ['S', 'M', 'L', 'XL'],
+                  sizes: product.size!.split(','),
                   onSizeSelected: (String selectedSize) {},
                 ),
                 const SizedBox(height: 16),
-                _buildDescriptionSection(),
+                _buildDescriptionSection(product),
                 const SizedBox(height: 20),
               ],
             ),
@@ -71,7 +108,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Widget _buildDescriptionSection() {
+  Widget _buildDescriptionSection(ProductDetailsModel product) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -80,27 +117,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(height: 4),
-        const Text(
-          "Nike is the most popular sneaker brand in the "
-          "United States, followed by Adidas and New Balance. To no"
-          " one's surprise Nike is the leading sneaker brand in all "
-          "our measured brand KPIs. It is rivaled only by Adidas in "
-          "brand awareness, while New Balance and Skechers jointly rank"
-          " third in brand ownership share",
+         Text(
+          product.des.toString(),
           textAlign: TextAlign.justify,
-          style: TextStyle(color: Colors.black45),
+          style: const TextStyle(color: Colors.black45),
         ),
       ],
     );
   }
 
-  Widget _buildNameAndQuantitySection() {
+  Widget _buildNameAndQuantitySection(ProductDetailsModel product) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      //crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           child: Text(
-            'Nike shoe 2024 latest model - New year special deal',
+            product.product!.title ?? '',
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
@@ -118,21 +150,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Widget _buildRatingAndReviewSection() {
+  Widget _buildRatingAndReviewSection(ProductDetailsModel product) {
     return Wrap(
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        const Wrap(
+         Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.star,
               color: Colors.amber,
               size: 20,
             ),
             Text(
-              "3.4 ",
-              style: TextStyle(
+              product.product!.star.toString(),
+              style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Colors.black45,
               ),
@@ -172,7 +204,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Widget _buildPriceAndAddToCartSection() {
+  Widget _buildPriceAndAddToCartSection(ProductDetailsModel product) {
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -190,7 +222,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             children: [
               const Text("Price"),
               Text(
-                "\$1,000",
+                "\$${product.product!.price}",
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge
