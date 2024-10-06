@@ -9,6 +9,9 @@ class Urls{
   static String productListByCategory(int categoryId) => '$_baseUrl/ListProductByCategory/$categoryId';
   static String productDetailsByID(int productId) => '$_baseUrl/ProductDetailsById/$productId';
 
+  static String verifyEmail(String email) => '$_baseUrl/UserLogin/$email';
+  static String verifyOtp(String email, String otp) => '$_baseUrl/VerifyLogin/$email/$otp';
+
 
 
 }
