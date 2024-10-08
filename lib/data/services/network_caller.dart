@@ -8,7 +8,7 @@ class NetworkCaller{
     NetworkCaller({required this.logger});
 
     // Get api method
-    Future<NetworkResponse> getRequest({required String url}) async{
+    Future<NetworkResponse> getRequest({required String url, String? token}) async{
 
         try {
             // Use logger section to see the output console
@@ -17,7 +17,7 @@ class NetworkCaller{
             final Response response = await get(
                 Uri.parse(url),
                 headers: {
-                    'token': ''
+                    'token': '$token'
                 }
             );
 

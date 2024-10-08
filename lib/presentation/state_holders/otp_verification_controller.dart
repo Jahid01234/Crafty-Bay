@@ -6,9 +6,11 @@ import 'package:get/get.dart';
 class OtpVerificationController extends GetxController {
   bool _inProgress = false;
   String? _errorMessage;
+  String _accessToken = '';
 
   bool get inProgress => _inProgress;
   String? get errorMessage => _errorMessage;
+  String get accessToken => _accessToken;
 
   Future<bool> verifyOtp(String email, String otp) async {
     bool isSuccess = false;
@@ -20,6 +22,7 @@ class OtpVerificationController extends GetxController {
     );
 
     if (response.isSuccess && response.responseData['msg'] == 'success') {
+      _accessToken = response.responseData['data'];
       _errorMessage = null;
       isSuccess = true;
     } else {
