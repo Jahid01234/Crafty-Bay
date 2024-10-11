@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:crafty_bay/data/models/network_response.dart';
+import 'package:crafty_bay/presentation/state_holders/auth_controller.dart';
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 
@@ -17,7 +18,7 @@ class NetworkCaller{
             final Response response = await get(
                 Uri.parse(url),
                 headers: {
-                    'token': '$token'
+                    'token': '${token ?? AuthController.accessToken}'
                 }
             );
 
@@ -58,14 +59,14 @@ class NetworkCaller{
 
         try {
             // Use logger section to see the output console
-            _requestLog(url, {}, body ?? {}, '');
+            _requestLog(url, {}, body ?? {}, AuthController.accessToken ?? '');
 
             final Response response = await post(
                 Uri.parse(url),
                 body: jsonEncode(body),
                 headers: {
                     'Content-type': 'Application/json',
-                    'token': ''
+                    'token': '${AuthController.accessToken}'
                 }
             );
 

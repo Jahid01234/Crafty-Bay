@@ -1,6 +1,7 @@
 import 'package:crafty_bay/data/models/network_response.dart';
 import 'package:crafty_bay/data/services/network_caller.dart';
 import 'package:crafty_bay/data/utils/urls.dart';
+import 'package:crafty_bay/presentation/state_holders/auth_controller.dart';
 import 'package:get/get.dart';
 
 class ReadProfileController extends GetxController{
@@ -25,6 +26,7 @@ class ReadProfileController extends GetxController{
      if(response.isSuccess){
        if(response.responseData['data'] != null){
          _isProfileCompleted = true;
+         await Get.find<AuthController>().saveAccessToken(token);
        }
        _errorMessage = null;
        isSuccess = true;

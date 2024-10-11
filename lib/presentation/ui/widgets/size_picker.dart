@@ -30,36 +30,17 @@ class _SizePickerState extends State<SizePicker> {
             return GestureDetector(
               onTap: (){
                 _selectedSize = item;
+                widget.onSizeSelected(item);
                 setState(() {});
               },
-              // child: Container(
-              //   padding: const EdgeInsets.symmetric(horizontal: 8),
-              //    decoration: BoxDecoration(
-              //      //shape: BoxShape.circle,
-              //      border: _selectedSize == item
-              //          ? Border.all(color: Colors.white)
-              //          :Border.all() ,
-              //        color: _selectedSize == item
-              //            ? AppColors.themeColor
-              //            : null
-              //    ),
-              //   child: Text(
-              //     item,
-              //     style: TextStyle(
-              //         //fontSize: 16,
-              //         color: _selectedSize == item
-              //             ? Colors.white
-              //             : null,
-              //     ),
-              //   ),
-              // ),
+
               child: CircleAvatar(
                 backgroundColor: Colors.grey.shade300,
                 radius: 16,
                 child: Text(
                   item,
                   style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 13,
                     color: _selectedSize == item
                         ?  Colors.blue
                         : null,
