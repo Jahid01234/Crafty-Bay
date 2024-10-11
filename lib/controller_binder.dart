@@ -19,7 +19,13 @@ class ControllerBinder extends Bindings{
   @override
   void dependencies() {
     Get.put( Logger());
-    Get.put( NetworkCaller(logger: Get.find<Logger>()));
+    Get.put( AuthController());
+    Get.put(
+        NetworkCaller(
+          logger: Get.find<Logger>(),
+          authController: Get.find<AuthController>(),
+        ),
+    );
 
     Get.put( BottomNavBarController());
     Get.put( SliderListController());
@@ -29,12 +35,10 @@ class ControllerBinder extends Bindings{
     Get.put( SpecialProductListController());
     Get.put( ProductListByCategoryController());
     Get.put( ProductDetailsController());
-    Get.put( AuthController());
     Get.put( AddToCartController());
-
-    Get.lazyPut(() => EmailVerificationController());
-    Get.lazyPut(() => OtpVerificationController());
-    Get.lazyPut(() => ReadProfileController());
+    Get.put( EmailVerificationController());
+    Get.put( OtpVerificationController());
+    Get.put( ReadProfileController());
 
   }
 

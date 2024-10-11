@@ -1,12 +1,16 @@
 import 'dart:convert';
 import 'package:crafty_bay/data/models/network_response.dart';
 import 'package:crafty_bay/presentation/state_holders/auth_controller.dart';
+import 'package:crafty_bay/presentation/ui/screens/email_verification_screen.dart';
+import 'package:get/get.dart' as getx;
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 
 class NetworkCaller{
     final Logger logger;
-    NetworkCaller({required this.logger});
+    final AuthController authController;
+
+    NetworkCaller({required this.logger, required this.authController});
 
     // Get api method
     Future<NetworkResponse> getRequest({required String url, String? token}) async{
@@ -35,7 +39,9 @@ class NetworkCaller{
             } else {
                 // Use logger section to see the output console
                 _responseLog(url, response.statusCode, response.body, response.headers, false);
-
+                if(response.statusCode == 401){
+                    _moveToLogin();
+                }
                 return NetworkResponse(
                     statusCode: response.statusCode,
                     isSuccess: false,
@@ -83,6 +89,9 @@ class NetworkCaller{
             } else {
                 // Use logger section to see the output console
                 _responseLog(url, response.statusCode, response.body, response.headers, false);
+                if(response.statusCode == 401){
+                    _moveToLogin();
+                }
 
                 return NetworkResponse(
                     statusCode: response.statusCode,
@@ -103,7 +112,15 @@ class NetworkCaller{
     }
 
 
+
+    // When unauthorized , it clear all data and again login
+    Future<void> _moveToLogin() async {
+        await authController.clearUserData();
+        getx.Get.to(() => const EmailVerificationScreen());
+    }
+
     // logger section to see the output console
+    // request Log--
     void _requestLog(
         String url,
         Map<String, dynamic> params,
@@ -118,6 +135,7 @@ class NetworkCaller{
               ''');
     }
 
+    // response Log--
     void _responseLog(
         String url,
         int statusCode,
@@ -139,6 +157,7 @@ class NetworkCaller{
             logger.e(message);
         }
     }
+
 
 
 }
