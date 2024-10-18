@@ -1,16 +1,29 @@
+import 'package:crafty_bay/presentation/state_holders/review_list_controller.dart';
 import 'package:crafty_bay/presentation/ui/screens/create_review_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
+import 'package:crafty_bay/presentation/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ReviewsScreen extends StatefulWidget {
-  const ReviewsScreen({super.key});
+  final int productId;
+
+  const ReviewsScreen({
+    super.key,
+    required this.productId,
+  });
 
   @override
   State<ReviewsScreen> createState() => _ReviewsScreenState();
 }
 
 class _ReviewsScreenState extends State<ReviewsScreen> {
+
+   @override
+  void initState() {
+    super.initState();
+    Get.find<ReviewListController>().getReviewListById(widget.productId);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,41 +45,49 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                 left: 15,
                 right: 15
               ),
-              child:ListView.builder(
-                  itemCount: 20 ,
-                  itemBuilder: (context, index){
-                    return  Card(
-                      color: Colors.white,
-                      elevation: 0.5,
-                      child: ListTile(
-                        title:  Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 15,
-                              backgroundColor: Colors.grey.shade200,
-                              child: const Icon(
-                                Icons.person_outline_outlined,
-                                color: Colors.grey,
-                                size: 15,
+              child:GetBuilder<ReviewListController>(
+                builder: (reviewListController) {
+                  if (reviewListController.inProgress) {
+                    return const CenteredCircularProgressIndicator();
+                  }
+                  if (reviewListController.reviewList.isEmpty) {
+                    return const Center(child: Text('No reviews available.'));
+                  }
+
+                  return ListView.builder(
+                      itemCount: reviewListController.reviewList.length ,
+                      itemBuilder: (context, index){
+                        return  Card(
+                          color: Colors.white,
+                          elevation: 0.5,
+                          child:  ListTile(
+                                title:  Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 15,
+                                      backgroundColor: Colors.grey.shade200,
+                                      child: const Icon(
+                                        Icons.person_outline_outlined,
+                                        color: Colors.grey,
+                                        size: 15,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8,),
+                                    Text(
+                                        reviewListController.reviewList[index].profile!.cusName ?? '',
+                                    ),
+                                  ],
+                                ),
+                                subtitle: Text(
+                                  reviewListController.reviewList[index].description ?? '',
+                                  textAlign: TextAlign.justify,
+                                  style: const TextStyle(color: Colors.grey),
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 8,),
-                            const Text("Jahid Hasan"),
-                          ],
-                        ),
-                        subtitle: const Text(
-                          "Nike is the most popular sneaker brand in the "
-                              "United States, followed by Adidas and New Balance. To no"
-                              " one's surprise Nike is the leading sneaker brand in all "
-                              "our measured brand KPIs. It is rivaled only by Adidas in "
-                              "brand awareness, while New Balance and Skechers jointly rank"
-                              " third in brand ownership share",
-                          textAlign: TextAlign.justify,
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ),
-                    );
-                  },
+                        );
+                      },
+                  );
+                }
               ) ,
             ),
           ),
@@ -87,29 +108,33 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
           ),
           child: Padding(
             padding: const EdgeInsets.all(15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                    "Reviews (1000)",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                        ),
+            child: GetBuilder<ReviewListController>(
+              builder: (reviewListController) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Reviews (${reviewListController.reviewList.length})",
+                        style: Theme.of(context).textTheme.bodyLarge,
                     ),
-                    onPressed: () {
-                      Get.to(()=> const CreateReviewScreen());
-                    },
-                    child: const Icon(Icons.add),
-                  ),
-                ),
-              ],
+                    SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                            ),
+                        ),
+                        onPressed: () {
+                          Get.to(()=> const CreateReviewScreen());
+                        },
+                        child: const Icon(Icons.add),
+                      ),
+                    ),
+                  ],
+                );
+              }
             ),
           ),
         );

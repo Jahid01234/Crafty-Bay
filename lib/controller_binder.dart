@@ -14,6 +14,7 @@ import 'package:crafty_bay/presentation/state_holders/slider_list_controller.dar
 import 'package:crafty_bay/presentation/state_holders/special_product_list_controller.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'presentation/state_holders/review_list_controller.dart';
 
 class ControllerBinder extends Bindings{
   @override
@@ -39,6 +40,7 @@ class ControllerBinder extends Bindings{
     Get.put( EmailVerificationController());
     Get.put( OtpVerificationController());
     Get.put( ReadProfileController());
+    Get.put( ReviewListController());
 
   }
 

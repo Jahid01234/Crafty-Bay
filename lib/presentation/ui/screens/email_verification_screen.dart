@@ -7,7 +7,6 @@ import 'package:crafty_bay/presentation/ui/widgets/centered_circular_progress_in
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({super.key});
 
