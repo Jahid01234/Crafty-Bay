@@ -89,7 +89,8 @@ class _HomeBannerSliderState extends State<HomeBannerSlider> {
                                     textAlign: TextAlign.start,
                                     style:
                                     Theme.of(context).textTheme.titleLarge?.copyWith(
-                                      color: Colors.grey,
+                                      fontSize: 17,
+                                      color: Colors.teal.withOpacity(0.7),
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),

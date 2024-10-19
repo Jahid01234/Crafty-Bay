@@ -127,9 +127,12 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                             ),
                         ),
                         onPressed: () {
-                          Get.to(()=> const CreateReviewScreen());
+                          Get.to(()=>  CreateReviewScreen(
+                            productId: widget.productId,
+                           ),
+                          );
                         },
-                        child: const Icon(Icons.add),
+                        child: const Icon(Icons.add,size: 17,),
                       ),
                     ),
                   ],

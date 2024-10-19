@@ -25,10 +25,10 @@ class _ProductImageSliderState extends State<ProductImageSlider> {
           CarouselSlider(
             options: CarouselOptions(
               height: 200,
+              viewportFraction: 1,
               onPageChanged: (index, reason) {
                 _selectedIndex.value = index;
               },
-              viewportFraction: 1
             ),
             items: widget.sliderUrls.map((imageUrl) {
               return Builder(
