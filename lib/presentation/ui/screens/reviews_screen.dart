@@ -75,19 +75,25 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                     const SizedBox(width: 8,),
                                     Text(
                                         reviewListController.reviewList[index].profile!.cusName ?? '',
+                                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                        color: Colors.black45,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ],
                                 ),
                                 subtitle: Text(
                                   reviewListController.reviewList[index].description ?? '',
                                   textAlign: TextAlign.justify,
-                                  style: const TextStyle(color: Colors.grey),
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: Colors.grey,
+                                  ),
                                 ),
                               ),
                         );
                       },
                   );
-                }
+                },
               ) ,
             ),
           ),
@@ -137,7 +143,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                     ),
                   ],
                 );
-              }
+              },
             ),
           ),
         );

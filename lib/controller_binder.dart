@@ -7,6 +7,7 @@ import 'package:crafty_bay/presentation/state_holders/create_product_review_cont
 import 'package:crafty_bay/presentation/state_holders/email_verification_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/new_product_list_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/otp_verification_controller.dart';
+import 'package:crafty_bay/presentation/state_holders/payment_method_list_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/popular_product_list_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/product_details_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/product_list_by_category_controller.dart';
@@ -43,6 +44,7 @@ class ControllerBinder extends Bindings{
     Get.put( ReadProfileController());
     Get.put( ReviewListController());
     Get.put( CreateProductReviewController());
+    Get.put( PaymentMethodListController());
 
   }
 

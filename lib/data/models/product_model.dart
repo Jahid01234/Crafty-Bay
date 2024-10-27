@@ -19,8 +19,8 @@ class ProductModel {
   BrandModel? brand;
   CategoryModel? category;
 
-  ProductModel(
-      {this.id,
+  ProductModel({
+        this.id,
         this.title,
         this.shortDes,
         this.price,
@@ -35,7 +35,8 @@ class ProductModel {
         this.createdAt,
         this.updatedAt,
         this.brand,
-        this.category});
+        this.category,
+  });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

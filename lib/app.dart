@@ -1,4 +1,5 @@
 import 'package:crafty_bay/controller_binder.dart';
+import 'package:crafty_bay/presentation/ui/screens/payment_details_screen.dart';
 import 'package:crafty_bay/presentation/ui/screens/splash_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
 import 'package:flutter/material.dart';
