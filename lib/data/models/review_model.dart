@@ -30,7 +30,7 @@ class ReviewModel {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     profile =
-    json['profile'] != null ? new ProfileModel.fromJson(json['profile']) : null;
+    json['profile'] != null ? ProfileModel.fromJson(json['profile']) : null;
   }
 
   Map<String, dynamic> toJson() {

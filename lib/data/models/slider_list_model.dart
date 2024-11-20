@@ -4,7 +4,10 @@ class SliderListModel {
   String? msg;
   List<SliderModel>? sliderList;
 
-  SliderListModel({this.msg, this.sliderList});
+  SliderListModel({
+    this.msg,
+    this.sliderList,
+  });
 
   SliderListModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];

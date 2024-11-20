@@ -4,7 +4,10 @@ class CategoryListModel {
   String? msg;
   List<CategoryModel>? categoryList;
 
-  CategoryListModel({this.msg, this.categoryList});
+  CategoryListModel({
+    this.msg,
+    this.categoryList,
+  });
 
   CategoryListModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];

@@ -4,7 +4,10 @@ class ProductListModel {
   String? msg;
   List<ProductModel>? productList;
 
-  ProductListModel({this.msg, this.productList});
+  ProductListModel({
+    this.msg,
+    this.productList,
+  });
 
   ProductListModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];

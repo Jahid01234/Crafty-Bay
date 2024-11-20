@@ -58,4 +58,29 @@ class ProductModel {
         ? CategoryModel.fromJson(json['category'])
         : null;
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['title'] = this.title;
+    data['short_des'] = this.shortDes;
+    data['price'] = this.price;
+    data['discount'] = this.discount;
+    data['discount_price'] = this.discountPrice;
+    data['image'] = this.image;
+    data['stock'] = this.stock;
+    data['star'] = this.star;
+    data['remark'] = this.remark;
+    data['category_id'] = this.categoryId;
+    data['brand_id'] = this.brandId;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    if (this.brand != null) {
+      data['brand'] = this.brand!.toJson();
+    }
+    if (this.category != null) {
+      data['category'] = this.category!.toJson();
+    }
+    return data;
+  }
 }

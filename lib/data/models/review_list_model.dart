@@ -4,7 +4,10 @@ class ReviewListModel {
   String? msg;
   List<ReviewModel>? reviewList;
 
-  ReviewListModel({this.msg, this.reviewList});
+  ReviewListModel({
+    this.msg,
+    this.reviewList,
+  });
 
   ReviewListModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
