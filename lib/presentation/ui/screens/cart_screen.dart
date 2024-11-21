@@ -1,7 +1,9 @@
 import 'package:crafty_bay/presentation/state_holders/bottom_nav_bar_controller.dart';
+import 'package:crafty_bay/presentation/state_holders/cart_list_controller.dart';
 import 'package:crafty_bay/presentation/ui/screens/payment_details_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
 import 'package:crafty_bay/presentation/ui/widgets/cart_item_widget.dart';
+import 'package:crafty_bay/presentation/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +16,12 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Get.find<CartListController>().getCartList(); // Fetch cart items on screen load
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,27 +38,41 @@ class _CartScreenState extends State<CartScreen> {
             icon: const Icon(Icons.arrow_back_ios),
           ),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child:ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index){
-                  return const CartItemWidget();
-                }
-              ) ,
-            ),
+        body: GetBuilder<CartListController>(
+          builder: (cartController) {
+            if (cartController.inProgress) {
+              return const CenteredCircularProgressIndicator();
+            }
 
-            // Bottom section(Total price and checkOut button)
-            _buildPriceAndAddToCartSection(),
-          ],
+            if (cartController.cartModel.isEmpty) {
+              return const Center(
+                child: Text("Your cart is empty!"),
+              );
+            }
+            return Column(
+              children: [
+                Expanded(
+                  child:ListView.builder(
+                    itemCount: cartController.cartModel.length,
+                    itemBuilder: (context, index){
+                      final cartItem = cartController.cartModel[index];
+                      return CartItemWidget(cartItem: cartItem);
+                    }
+                  ) ,
+                ),
+
+                // Bottom section(Total price and checkOut button)
+                _buildPriceAndAddToCartSection(cartController.totalPrice),
+              ],
+            );
+          }
         )
       ),
     );
   }
 
 
-  Widget _buildPriceAndAddToCartSection() {
+  Widget _buildPriceAndAddToCartSection(int totalPrice) {
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -68,7 +90,7 @@ class _CartScreenState extends State<CartScreen> {
             children: [
               const Text("Total Price"),
               Text(
-                "\$1,000",
+                "\$$totalPrice",
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge

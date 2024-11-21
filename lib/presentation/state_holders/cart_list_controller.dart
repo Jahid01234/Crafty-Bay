@@ -20,6 +20,7 @@ class CartListController extends GetxController {
 
   Future<bool> getCartList() async {
     bool isSuccess = false;
+    _cartModel.clear;
     _inProgress = true;
     update();
 

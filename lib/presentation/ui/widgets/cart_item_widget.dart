@@ -1,10 +1,22 @@
-import 'package:crafty_bay/presentation/ui/utils/assets/app_assets.dart';
+import 'package:crafty_bay/data/models/cart_model.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
+import 'package:crafty_bay/presentation/ui/widgets/product_item_count_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:item_count_number_button/item_count_number_button.dart';
 
-class CartItemWidget extends StatelessWidget {
-  const CartItemWidget({super.key});
+
+class CartItemWidget extends StatefulWidget {
+  final CartModel cartItem;
+
+  const CartItemWidget({
+    super.key,
+    required this.cartItem,
+  });
+
+  @override
+  State<CartItemWidget> createState() => _CartItemWidgetState();
+}
+
+class _CartItemWidgetState extends State<CartItemWidget> {
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +29,7 @@ class CartItemWidget extends StatelessWidget {
       child: Row(
         children: [
           // Image section
-          _buildProductImage(),
+          _buildProductImage(widget.cartItem.product!.image),
 
           // Other section
           Expanded(
@@ -30,10 +42,10 @@ class CartItemWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Title of product',
+                            widget.cartItem.product!.title ?? 'Unknown Product',
                             style: textTheme.bodyLarge,
                           ),
-                          _buildColorAndSize(textTheme),
+                          _buildColorAndSize(widget.cartItem.color, widget.cartItem.size, textTheme),
                         ],
                       ),
                     ),
@@ -48,7 +60,7 @@ class CartItemWidget extends StatelessWidget {
                 ),
 
                 // Price and counter button Row section
-                _buildPriceAndCounter(textTheme),
+                _buildPriceAndCounter(widget.cartItem.price, widget.cartItem.qty, textTheme),
               ],
             ),
           ),
@@ -57,40 +69,57 @@ class CartItemWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildPriceAndCounter(TextTheme textTheme) {
+  Widget _buildPriceAndCounter(String? price, String? quantityStr, TextTheme textTheme) {
+    // Convert quantity from String? to int
+    int quantity = int.tryParse(quantityStr ?? '1') ?? 1;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          "\$100",
+          "\$$price",
           style: textTheme.titleMedium?.copyWith(
               color: AppColors.themeColor,
           ),
         ),
-        ItemCount(
-          color: AppColors.themeColor.withOpacity(0.4),
-          initialValue: 1,
-          minValue: 1,
-          maxValue: 20,
-          decimalPlaces: 0,
-          onChanged: (value) {},
+        // ItemCount(
+        //   color: AppColors.themeColor.withOpacity(0.4),
+        //   initialValue: 1,
+        //   minValue: 1,
+        //   maxValue: 20,
+        //   decimalPlaces: 0,
+        //   onChanged: (value) {},
+        // ),
+        ProductItemCountPicker(
+          itemBuyingAmount: quantity,
+          plusButtonOnPressed: (){
+            quantity++;
+            setState(() {});
+          },
+          minusButtonOnPressed: (){
+            if(quantity>1){
+              quantity--;
+              setState(() {});
+            }
+          },
         ),
+
       ],
     );
   }
 
-  Widget _buildColorAndSize(TextTheme textTheme) {
+  Widget _buildColorAndSize(String? color, String? size, TextTheme textTheme) {
     return Wrap(
       spacing: 8,
       children: [
         Text(
-          'Color: Red',
+          'Color: $color',
           style: textTheme.bodySmall?.copyWith(
             color: Colors.grey,
           ),
         ),
         Text(
-          'Size: XL',
+          'Size: $size',
           style: textTheme.bodySmall?.copyWith(
             color: Colors.grey,
           ),
@@ -99,11 +128,11 @@ class CartItemWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildProductImage() {
+  Widget _buildProductImage(String? imageUrl) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Image.asset(
-        AssetsPath.dummyProductImg,
+      child: Image.network(
+        imageUrl ?? '',
         height: 80,
         width: 80,
         fit: BoxFit.scaleDown,

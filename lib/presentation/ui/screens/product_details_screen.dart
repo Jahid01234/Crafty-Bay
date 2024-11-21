@@ -2,6 +2,7 @@ import 'package:crafty_bay/data/models/product_details_model.dart';
 import 'package:crafty_bay/presentation/state_holders/add_to_cart_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/auth_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/product_details_controller.dart';
+import 'package:crafty_bay/presentation/ui/screens/cart_screen.dart';
 import 'package:crafty_bay/presentation/ui/screens/email_verification_screen.dart';
 import 'package:crafty_bay/presentation/ui/screens/reviews_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
@@ -9,6 +10,7 @@ import 'package:crafty_bay/presentation/ui/utils/snack_message.dart';
 import 'package:crafty_bay/presentation/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:crafty_bay/presentation/ui/widgets/color_picker.dart';
 import 'package:crafty_bay/presentation/ui/widgets/product_image_slider.dart';
+import 'package:crafty_bay/presentation/ui/widgets/product_item_count_picker.dart';
 import 'package:crafty_bay/presentation/ui/widgets/size_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -149,16 +151,29 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
-        ItemCount(
-          color: AppColors.themeColor.withOpacity(0.4),
-          initialValue: quantity,
-          minValue: 1,
-          maxValue: 20,
-          decimalPlaces: 0,
-          onChanged: (value) {
-            quantity = value.toInt();
-            setState(() {});
-          },
+        // ItemCount(
+        //   color: AppColors.themeColor.withOpacity(0.4),
+        //   initialValue: quantity,
+        //   minValue: 1,
+        //   maxValue: 20,
+        //   decimalPlaces: 0,
+        //   onChanged: (value) {
+        //     quantity = value.toInt();
+        //     setState(() {});
+        //   },
+        // ),
+        ProductItemCountPicker(
+            itemBuyingAmount: quantity,
+            plusButtonOnPressed: (){
+              quantity++;
+              setState(() {});
+            },
+            minusButtonOnPressed: (){
+              if(quantity>1){
+                quantity--;
+                setState(() {});
+              }
+            },
         ),
       ],
     );
@@ -283,6 +298,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
        if(result){
          if(mounted) {
+           Get.to(()=> const CartScreen());
            showSnackBarMessage(context, "Added to cart successfully!");
          }
        }else{
