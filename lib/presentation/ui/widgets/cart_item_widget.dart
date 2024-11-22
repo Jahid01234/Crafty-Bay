@@ -1,7 +1,12 @@
 import 'package:crafty_bay/data/models/cart_model.dart';
+import 'package:crafty_bay/presentation/state_holders/cart_list_controller.dart';
+import 'package:crafty_bay/presentation/state_holders/delete_cart_list_controller.dart';
 import 'package:crafty_bay/presentation/ui/utils/colors/app_colors.dart';
+import 'package:crafty_bay/presentation/ui/utils/snack_message.dart';
+import 'package:crafty_bay/presentation/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:crafty_bay/presentation/ui/widgets/product_item_count_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 class CartItemWidget extends StatefulWidget {
@@ -49,13 +54,35 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                         ],
                       ),
                     ),
-                     IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.delete,
-                          color: Colors.cyan,
-                        ),
-                      ),
+                     GetBuilder<DeleteCartListController>(
+                       builder: (deleteCartListController) {
+                         bool isLoading = deleteCartListController.isLoading(widget.cartItem.id!);
+
+                         return isLoading
+                             ? const CenteredCircularProgressIndicator()
+                             : IconButton(
+                                  onPressed: () async{
+                                    final cartController = Get.find<CartListController>();
+
+                                    bool isDeleted = await deleteCartListController.deleteCartList(widget.cartItem.id!);
+
+                                    if (isDeleted) {
+                                      cartController.updateTotalPriceAfterDeletion(
+                                        int.parse(widget.cartItem.price ?? '0'),
+                                      );
+                                      cartController.cartModel.remove(widget.cartItem);
+                                      cartController.update();
+                                    }else{
+                                      showSnackBarMessage(context, "Product does not deleted!");
+                                    }
+                                  },
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.cyan,
+                                  ),
+                                );
+                           },
+                     ),
                   ],
                 ),
 
@@ -82,14 +109,6 @@ class _CartItemWidgetState extends State<CartItemWidget> {
               color: AppColors.themeColor,
           ),
         ),
-        // ItemCount(
-        //   color: AppColors.themeColor.withOpacity(0.4),
-        //   initialValue: 1,
-        //   minValue: 1,
-        //   maxValue: 20,
-        //   decimalPlaces: 0,
-        //   onChanged: (value) {},
-        // ),
         ProductItemCountPicker(
           itemBuyingAmount: quantity,
           plusButtonOnPressed: (){

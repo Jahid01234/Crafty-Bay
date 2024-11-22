@@ -5,6 +5,7 @@ import 'package:crafty_bay/presentation/state_holders/bottom_nav_bar_controller.
 import 'package:crafty_bay/presentation/state_holders/cart_list_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/category_list_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/create_product_review_controller.dart';
+import 'package:crafty_bay/presentation/state_holders/delete_cart_list_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/email_verification_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/new_product_list_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/otp_verification_controller.dart';
@@ -15,6 +16,7 @@ import 'package:crafty_bay/presentation/state_holders/product_list_by_category_c
 import 'package:crafty_bay/presentation/state_holders/read_profile_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/slider_list_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/special_product_list_controller.dart';
+import 'package:crafty_bay/presentation/state_holders/wish_list_controller.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'presentation/state_holders/review_list_controller.dart';
@@ -47,6 +49,8 @@ class ControllerBinder extends Bindings{
     Get.put( CreateProductReviewController());
     Get.put( PaymentMethodListController());
     Get.put( CartListController());
+    Get.put( DeleteCartListController());
+    Get.put( WishListController());
 
   }
 

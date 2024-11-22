@@ -20,7 +20,10 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<CartListController>().getCartList(); // Fetch cart items on screen load
+    // Ensure cart list is always updated when this screen is opened
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<CartListController>().getCartList();
+    });
   }
 
   @override
