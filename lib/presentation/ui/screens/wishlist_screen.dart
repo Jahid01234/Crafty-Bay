@@ -13,6 +13,13 @@ class WishListScreen extends StatefulWidget {
 }
 
 class _WishListScreenState extends State<WishListScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Get.find<WishListController>().getWishList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(

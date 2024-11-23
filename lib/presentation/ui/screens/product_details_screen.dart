@@ -1,6 +1,8 @@
 import 'package:crafty_bay/data/models/product_details_model.dart';
 import 'package:crafty_bay/presentation/state_holders/add_to_cart_controller.dart';
+import 'package:crafty_bay/presentation/state_holders/add_wish_list_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/auth_controller.dart';
+import 'package:crafty_bay/presentation/state_holders/deleted_wish_list_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/product_details_controller.dart';
 import 'package:crafty_bay/presentation/ui/screens/cart_screen.dart';
 import 'package:crafty_bay/presentation/ui/screens/email_verification_screen.dart';
@@ -14,7 +16,8 @@ import 'package:crafty_bay/presentation/ui/widgets/product_item_count_picker.dar
 import 'package:crafty_bay/presentation/ui/widgets/size_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:item_count_number_button/item_count_number_button.dart';
+import '../../state_holders/wish_list_controller.dart';
+
 
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -33,12 +36,23 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   String _selectedColor = '';
   String _selectedSize = '';
   int quantity = 1;
+  bool isInWishlist = false;
 
   @override
   void initState() {
     super.initState();
     Get.find<ProductDetailsController>().getProductDetails(widget.productId);
+    _checkWishlistStatus();
   }
+
+  // toggle it wish list item added or not
+  void _checkWishlistStatus() {
+    setState(() {
+      isInWishlist= false;  // Set this based on whether the product is in the wishlist
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,17 +165,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
-        // ItemCount(
-        //   color: AppColors.themeColor.withOpacity(0.4),
-        //   initialValue: quantity,
-        //   minValue: 1,
-        //   maxValue: 20,
-        //   decimalPlaces: 0,
-        //   onChanged: (value) {
-        //     quantity = value.toInt();
-        //     setState(() {});
-        //   },
-        // ),
         ProductItemCountPicker(
             itemBuyingAmount: quantity,
             plusButtonOnPressed: (){
@@ -218,18 +221,50 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
         ),
         const SizedBox(width: 8),
-        Card(
-          elevation: 0,
-          color: AppColors.themeColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: const Padding(
-            padding: EdgeInsets.all(4.0),
-            child: Icon(
-              Icons.favorite_border_rounded,
-              color: Colors.white,
-              size: 16,
+
+        GestureDetector(
+          onTap: () async {
+            if (isInWishlist) {
+              bool result = await Get.find<DeletedWishListController>().deleteWishList(widget.productId.toString());
+              if (result) {
+                setState(() {
+                  isInWishlist = false;
+                });
+                showSnackBarMessage(context, "Removed from wish list");
+                // Refresh the wishlist data
+                Get.find<WishListController>().getWishList();
+              } else {
+                showSnackBarMessage(context, "Failed to remove from wish list");
+              }
+            } else {
+              bool result = await Get.find<AddWishListController>().addWishList(widget.productId.toString());
+              if (result) {
+                setState(() {
+                  isInWishlist = true;
+                });
+                showSnackBarMessage(context, "Added to wish list");
+                // Refresh the wishlist data
+                Get.find<WishListController>().getWishList();
+              } else {
+                showSnackBarMessage(context, "Failed to add to wish list");
+              }
+            }
+          },
+          child: Card(
+            elevation: 0,
+            color: AppColors.themeColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Icon(
+                isInWishlist
+                    ? Icons.favorite_rounded
+                    : Icons.favorite_border_rounded,
+                color: Colors.white,
+                size: 16,
+              ),
             ),
           ),
         ),
